@@ -31,7 +31,7 @@ async function main() {
             // if jsb query does not exist return error
             if (!url.searchParams.has('query')) {
                 return sendJson(res, {
-                    error: {code: 'missing.query', message: 'Missing jsb query'}
+                    error: {code: 'missingQuery', message: 'Missing jsb query'}
                 }, 400);
             }
 
@@ -39,7 +39,7 @@ async function main() {
 
             // check if body has content
             if (!body.hasOwnProperty('content')) {
-                sendJson(res, {error: {code: 'missing.content', message: 'Missing content'}}, 400);
+                sendJson(res, {error: {code: 'missingContent', message: 'Missing content'}}, 400);
                 return;
             }
 
