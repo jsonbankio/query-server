@@ -6,8 +6,10 @@ let envDir = __dirname;
 
 // If in development, i.e running form dist, set envDir to parent.
 if(__filename.includes("/dist/")) {
-    envDir = path.join(__dirname, "../");
+    envDir = path.join(__dirname, "/../");
 }
+
+console.log("Env directory:", envDir);
 
 // Validate Env
 export const env = Env(envDir, {
