@@ -12,11 +12,13 @@
   "license": "MIT",
   "private": true,
   "devDependencies": {
+    "@types/lodash": "^4.14.188",
     "@types/node": "^16.18.3",
     "nodemon": "^2.0.20",
     "typescript": "^4.8.4"
   },
   "dependencies": {
-    "@xpresser/env": "^2.0.10"
+    "@xpresser/env": "^2.0.10",
+    "lodash": "^4.17.21"
   }
 }
