@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "watch": "tsc -w",
+    "start": "tsc && node dist/index.js",
     "dev": "nodemon ./dist/server.js"
   },
   "description": "Jsonbank Query Server For Processing Jsb Queries.",

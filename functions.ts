@@ -1,4 +1,5 @@
 import _ from "lodash";
+import {env} from "./env";
 
 
 /**
@@ -21,6 +22,15 @@ _.mixin({
 function base64JsonDecode(str: string) {
     str = Buffer.from(str, "base64").toString("utf8");
     return JSON.parse(str);
+}
+
+
+/**
+ * Get size of a string
+ * @param str
+ */
+ function jsb_stringSize(str: string) {
+    return Buffer.byteLength(str)
 }
 
 
@@ -95,6 +105,21 @@ type Respond = (error: { error: { code: string, message: string } }, status: num
  * @param respond
  */
 export function jsb_queryObject(content: string, url: URL, respond: Respond) {
+    // get content size
+    const contentSize = jsb_stringSize(content);
+    // stop if content size is greater than 2MB
+    if (contentSize > env.JSB_QUERY_SERVER_MAX_CONTENT_SIZE * 1024 * 1024) {
+        return respond(
+            {
+                error: {
+                    code: "contentSizeExceeded",
+                    message: `Content size exceeded 2MB`
+                }
+            },
+            400
+        );
+    }
+
     let parsed: any = {};
 
 

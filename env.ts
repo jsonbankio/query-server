@@ -5,7 +5,7 @@ import path from "path";
 let envDir = __dirname;
 
 // If in development, i.e running form dist, set envDir to parent.
-if(__filename.includes("/dist/")) {
+if (__filename.includes("/dist/")) {
     envDir = path.join(__dirname, "/../");
 }
 
@@ -16,4 +16,6 @@ export const env = Env(envDir, {
     NODE_ENV: Env.is.enum(["development", "production"], "development"),
     APP_NAME: Env.is.string("Jsonbank Query Server"),
     JSB_QUERY_SERVER_PORT: Env.is.number(2224),
+    // Max Content Size in megabytes
+    JSB_QUERY_SERVER_MAX_CONTENT_SIZE: Env.is.number(2),
 })

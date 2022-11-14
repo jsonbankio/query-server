@@ -1,6 +1,6 @@
 import http from 'http';
 import {env} from "./env";
-import {jsb_queryObject} from "./src/http";
+import {jsb_queryObject} from "./functions";
 
 /**
  * Starts The Server
