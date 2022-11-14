@@ -30,18 +30,19 @@ async function main() {
         if (isValidRequest && url) {
             // if jsb query does not exist return error
             if (!url.searchParams.has('query')) {
-                return sendJson(res, {
+                 sendJson(res, {
                     error: {code: 'missingQuery', message: 'Missing jsb query'}
                 }, 400);
+                 return
             }
 
 
             const body = await convertBodyToObject(req);
-            console.log("Hello");
             if(body === null) {
-                return sendJson(res, {
+                 sendJson(res, {
                     error: {code: 'invalidBody', message: 'Invalid body'}
                 }, 400);
+                 return
             }
 
 
@@ -49,6 +50,23 @@ async function main() {
             if (!body.hasOwnProperty('content')) {
                 sendJson(res, {error: {code: 'missingContent', message: 'Missing content'}}, 400);
                 return;
+            }
+
+            // check if content is string
+            if (typeof body.content !== 'string') {
+                // check if content is object
+                if (typeof body.content !== 'object') {
+                    sendJson(res, {error: {code: 'invalidContent', message: 'Invalid content'}}, 400);
+                    return;
+                }
+
+                // if content is object, try to stringify it
+                try {
+                    body.content = JSON.stringify(body.content);
+                } catch (e) {
+                    sendJson(res, {error: {code: 'invalidContent', message: 'Invalid content'}}, 400);
+                    return;
+                }
             }
 
             jsb_queryObject(body.content, url, (data, status) =>
