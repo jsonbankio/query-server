@@ -35,7 +35,15 @@ async function main() {
                 }, 400);
             }
 
+
             const body = await convertBodyToObject(req);
+            console.log("Hello");
+            if(body === null) {
+                return sendJson(res, {
+                    error: {code: 'invalidBody', message: 'Invalid body'}
+                }, 400);
+            }
+
 
             // check if body has content
             if (!body.hasOwnProperty('content')) {
@@ -79,8 +87,9 @@ function sendJson(res: http.ServerResponse, data: string | object, status = 200)
 }
 
 // Convert Body to Object
-function convertBodyToObject(req: http.IncomingMessage): Promise<Record<string, any>> {
-    return new Promise((resolve, reject) => {
+function convertBodyToObject(req: http.IncomingMessage): Promise<Record<string, any>|null> {
+    return new Promise((resolve) => {
+
         let body = '';
         req.on('data', chunk => {
             body += chunk.toString();
@@ -89,7 +98,7 @@ function convertBodyToObject(req: http.IncomingMessage): Promise<Record<string, 
             try {
                 resolve(JSON.parse(body));
             } catch (err) {
-                reject({});
+                resolve(null);
             }
         });
     });
