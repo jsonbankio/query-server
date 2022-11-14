@@ -43,8 +43,6 @@ async function main() {
                 return;
             }
 
-            console.log(`Received request for ${req.url}`);
-
             jsb_queryObject(body.content, url, (data, status) =>
                 sendJson(res, data, status));
         } else {
@@ -57,11 +55,11 @@ async function main() {
 
 
     // Listen to port 3000
-    server.listen(env.APP_PORT, function () {
+    server.listen(env.JSB_QUERY_SERVER_PORT, function () {
 
-        console.log(`${env.APP_NAME} is running on port ${env.APP_PORT}`);
+        console.log(`${env.APP_NAME} is running on port ${env.JSB_QUERY_SERVER_PORT}`);
         // log link to console
-        console.log(`http://localhost:${env.APP_PORT}`);
+        console.log(`http://localhost:${env.JSB_QUERY_SERVER_PORT}`);
     })
 }
 

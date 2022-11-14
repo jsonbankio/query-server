@@ -13,5 +13,5 @@ if(__filename.includes("/dist/")) {
 export const env = Env(envDir, {
     NODE_ENV: Env.is.enum(["development", "production"], "development"),
     APP_NAME: Env.is.string("Jsonbank Query Server"),
-    APP_PORT: Env.is.number(2224),
+    JSB_QUERY_SERVER_PORT: Env.is.number(2224),
 })
