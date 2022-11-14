@@ -1,0 +1,22 @@
+{
+  "name": "jsb-query-server",
+  "version": "1.0.0",
+  "scripts": {
+    "watch": "tsc -w",
+    "dev": "nodemon ./dist/server.js"
+  },
+  "description": "Jsonbank Query Server For Processing Jsb Queries.",
+  "main": "index.js",
+  "repository": "https://github.com/jsonbankio/query-server",
+  "author": "jsonbankio",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "@types/node": "^16.18.3",
+    "nodemon": "^2.0.20",
+    "typescript": "^4.8.4"
+  },
+  "dependencies": {
+    "@xpresser/env": "^2.0.10"
+  }
+}
