@@ -15,34 +15,36 @@ async function main() {
         let isValidRequest = req.method == 'POST';
         let url: URL | null = null;
 
-        try {
-            // parse the url
-            url = new URL(req.url || '', `https://${req.headers.host}`);
+        if (isValidRequest) {
+            try {
+                // parse the url
+                url = new URL(req.url || '', `https://${req.headers.host}`);
 
-            if (!["/query", "/"].includes(url.pathname)) {
+                if (!["/query", "/"].includes(url.pathname)) {
+                    isValidRequest = false;
+                }
+            } catch (e) {
                 isValidRequest = false;
             }
-        } catch (e) {
-            isValidRequest = false;
         }
 
 
         if (isValidRequest && url) {
             // if jsb query does not exist return error
             if (!url.searchParams.has('query')) {
-                 sendJson(res, {
+                sendJson(res, {
                     error: {code: 'missingQuery', message: 'Missing jsb query'}
                 }, 400);
-                 return
+                return
             }
 
 
             const body = await convertBodyToObject(req);
-            if(body === null) {
-                 sendJson(res, {
+            if (body === null) {
+                sendJson(res, {
                     error: {code: 'invalidBody', message: 'Invalid body'}
                 }, 400);
-                 return
+                return
             }
 
 
@@ -68,6 +70,7 @@ async function main() {
                     return;
                 }
             }
+
 
             jsb_queryObject(body.content, url, (data, status) =>
                 sendJson(res, data, status));
@@ -105,13 +108,14 @@ function sendJson(res: http.ServerResponse, data: string | object, status = 200)
 }
 
 // Convert Body to Object
-function convertBodyToObject(req: http.IncomingMessage): Promise<Record<string, any>|null> {
+function convertBodyToObject(req: http.IncomingMessage): Promise<Record<string, any> | null> {
     return new Promise((resolve) => {
 
         let body = '';
         req.on('data', chunk => {
             body += chunk.toString();
         });
+
         req.on('end', () => {
             try {
                 resolve(JSON.parse(body));
